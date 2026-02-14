@@ -1,3 +1,7 @@
+export const metadata = {
+  title: "Guest",
+};
+
 export default function Account() {
   return (
     <div>

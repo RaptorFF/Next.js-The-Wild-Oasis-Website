@@ -7,7 +7,13 @@ import "@/app/_styles/globals.css";
 // It is used to define the common layout and structure of our application, such as the header, footer,
 // and navigation. It also defines the metadata for our application, such as the title and description.
 export const metadata = {
-  title: "The Wild Oasis",
+  // title: "The Wild Oasis",
+  title: {
+    default: "Welcome | The Wild Oasis",
+    template: "%s | The Wild Oasis",
+  },
+  description:
+    "The Wild Oasis is a paradise for nature lovers and adventure seekers. Explore our cabins, activities, and more.",
 };
 
 export default function RootLayout({ children }) {
