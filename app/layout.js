@@ -1,5 +1,7 @@
-import { Navigation } from "./components/Navigation";
-import Logo from "./Logo";
+import { Navigation } from "@/app/_components/Navigation";
+import Logo from "@/app/Logo";
+
+import "@/app/_styles/globals.css";
 
 // This is the root layout of our application. It wraps all pages and components in the app directory.
 // It is used to define the common layout and structure of our application, such as the header, footer,
@@ -11,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-primary-950 text-primary-100 min-h-screen">
         <header>
           <Logo />
           <Navigation />
