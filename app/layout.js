@@ -1,5 +1,14 @@
 import { Navigation } from "@/app/_components/Navigation";
 import Logo from "@/app/Logo";
+// We are importing the Josefin Sans font from Google Fonts using the next/font package.
+// This allows us to use the font in our application and ensures that it is loaded efficiently.
+import { Josefin_Sans } from "next/font/google";
+const josefin = Josefin_Sans({
+  subsets: ["latin"],
+  display: "swap",
+});
+
+// console.log(josefin);
 
 import "@/app/_styles/globals.css";
 
@@ -19,7 +28,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-primary-950 text-primary-100 min-h-screen">
+      <body
+        className={`bg-primary-950 text-primary-100 min-h-screen ${josefin.className}`}
+      >
         <header>
           <Logo />
           <Navigation />

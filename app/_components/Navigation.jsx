@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function Navigation() {
   return (
-    <ul className="flex flex-row gap-x-4">
+    <ul>
       <li>
         <Link href="/">Home</Link>
       </li>
