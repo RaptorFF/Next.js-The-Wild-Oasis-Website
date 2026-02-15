@@ -1,5 +1,5 @@
 import { Navigation } from "@/app/_components/Navigation";
-import Logo from "@/app/Logo";
+import Logo from "@/app/_components/Logo";
 // We are importing the Josefin Sans font from Google Fonts using the next/font package.
 // This allows us to use the font in our application and ensures that it is loaded efficiently.
 import { Josefin_Sans } from "next/font/google";
@@ -11,6 +11,7 @@ const josefin = Josefin_Sans({
 // console.log(josefin);
 
 import "@/app/_styles/globals.css";
+import Header from "./_components/Header";
 
 // This is the root layout of our application. It wraps all pages and components in the app directory.
 // It is used to define the common layout and structure of our application, such as the header, footer,
@@ -29,14 +30,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`bg-primary-950 text-primary-100 min-h-screen ${josefin.className}`}
+        className={`bg-primary-950 antialiased text-primary-100 min-h-screen ${josefin.className} flex flex-col`}
       >
-        <header>
-          <Logo />
-          <Navigation />
-        </header>
-        <main>{children}</main>
-        <footer>Copyright ©️ {new Date().getFullYear()} The Wild Oasis</footer>
+        <Header />
+        <div className="flex-1 px-8 py-12">
+          <main className="max-w-7xl mx-auto">{children}</main>
+        </div>
       </body>
     </html>
   );
