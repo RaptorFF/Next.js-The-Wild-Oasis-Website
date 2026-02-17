@@ -2,6 +2,17 @@ import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { getCabin } from "@/app/_lib/data-service";
 import Image from "next/image";
 
+// export const metadata = {
+//   title: "Cabin Details",
+// };
+
+export async function generateMetadata({ params }) {
+  const cabin = await getCabin(params.cabinId);
+  return {
+    title: `Cabin ${cabin.name} Details`,
+  };
+}
+
 export default async function Page({ params }) {
   //Whenever we navigate to a dynamic route, Next.js provides us with a params object that contains the dynamic segments of the URL. In this case, since our file is named [cabinId].js, we can access the cabinId parameter from the params object. This allows us to fetch and display data specific to the cabin that corresponds to the cabinId in the URL.
   //console.log(params);
@@ -14,7 +25,12 @@ export default async function Page({ params }) {
     <div className="max-w-6xl mx-auto mt-8">
       <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
         <div className="relative scale-[1.15] -translate-x-3">
-          <Image src={image} fill className="object-cover" alt={`Cabin ${name}`} />
+          <Image
+            src={image}
+            fill
+            className="object-cover"
+            alt={`Cabin ${name}`}
+          />
         </div>
 
         <div>
