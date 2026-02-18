@@ -2,6 +2,9 @@ import { Suspense } from "react";
 import CabinList from "../_components/CabinList";
 import Spinner from "../_components/Spinner";
 
+// export const revalidate = 0; // Disable caching for this page, so it always fetches fresh data on each request.
+export const revalidate = 3600; // Cache the page for 1 hour (3600 seconds). After that, the next request will trigger a revalidation and fetch fresh data.
+
 export const metadata = {
   title: "Cabins",
 };
