@@ -1,5 +1,5 @@
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
-import { getCabin } from "@/app/_lib/data-service";
+import { getCabin, getCabins } from "@/app/_lib/data-service";
 import Image from "next/image";
 
 // export const metadata = {
@@ -11,6 +11,14 @@ export async function generateMetadata({ params }) {
   return {
     title: `Cabin ${cabin.name} Details`,
   };
+}
+//In Next.js 13, when you have a dynamic route (like [cabinId].js), you can use the generateStaticParams function to specify which dynamic routes should be pre-rendered at build time. This is particularly useful for improving performance and SEO, as it allows Next.js to generate static HTML for those routes instead of rendering them on the fly.
+export async function generateStaticParams() {
+  const cabins = await getCabins();
+  const ids = cabins.map((cabin) => ({
+    cabinId: cabin.id.toString(),
+  }));
+  return ids;
 }
 
 export default async function Page({ params }) {
