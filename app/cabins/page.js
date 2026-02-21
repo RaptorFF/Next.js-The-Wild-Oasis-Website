@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import CabinList from "../_components/CabinList";
 import Spinner from "../_components/Spinner";
 import Filter from "../_components/Filter";
+import ReservationReminder from "../_components/ReservationReminder";
 
 // export const revalidate = 0; // Disable caching for this page, so it always fetches fresh data on each request.
 // Cache the page for 1 hour (3600 seconds). After that, the next request will trigger a revalidation and fetch fresh data.
@@ -35,6 +36,7 @@ export default function Page({ searchParams }) {
       {/* The CabinList component is wrapped in Suspense to show a loading spinner while the data is being fetched. */}
       <Suspense fallback={<Spinner />} key={filter}>
         <CabinList filter={filter} />
+        <ReservationReminder />
       </Suspense>
     </div>
   );
