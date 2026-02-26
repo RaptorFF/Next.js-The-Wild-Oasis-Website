@@ -1,5 +1,4 @@
 import { getBookedDatesByCabinId, getCabin } from "@/app/_lib/data-service";
-import { ca } from "date-fns/locale";
 
 export async function GET(request, { params }) {
   const { cabinId } = params; // Extract the cabinId from the route parameters
