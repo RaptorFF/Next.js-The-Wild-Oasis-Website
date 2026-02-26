@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import { supabase } from "./supabase";
 
@@ -33,6 +34,8 @@ export async function updateGuestProfile(formData) {
   if (error) {
     throw new Error("Guest could not be updated");
   }
+  // After updating the guest profile, we want to revalidate the profile page so that the updated information is displayed when the user navigates back to their profile.
+  revalidatePath("/account/profile");
 }
 
 export async function signInAction() {
