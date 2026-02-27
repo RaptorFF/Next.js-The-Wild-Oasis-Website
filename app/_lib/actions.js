@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import { supabase } from "./supabase";
 import { getBookings } from "./data-service";
+import { redirect } from "next/navigation";
 
 export async function updateGuestProfile(formData) {
   // Check if the user is authenticated before allowing them to update their profile
@@ -37,6 +38,35 @@ export async function updateGuestProfile(formData) {
   }
   // After updating the guest profile, we want to revalidate the profile page so that the updated information is displayed when the user navigates back to their profile.
   revalidatePath("/account/profile");
+}
+
+export async function updateReservation(formData) {
+  // Check if the user is authenticated before allowing them to update a reservation
+  const session = await auth();
+  if (!session)
+    throw new Error("You must be logged in to update a reservation");
+
+  // Add logic to update the reservation using formData
+  const numGuests = formData.get("numGuests");
+  const observations = formData.get("observations");
+  const bookingId = formData.get("bookingId");
+
+  const updateData = { numGuests, observations };
+
+  const { error } = await supabase
+    .from("bookings")
+    .update(updateData)
+    .eq("id", bookingId);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Booking could not be updated");
+  }
+
+  // After updating the reservation, we want to revalidate the reservations page so that the updated reservation information is displayed when the user navigates back to their reservations.
+  revalidatePath("/account/reservations");
+
+  redirect("/account/reservations");
 }
 
 export async function deleteReservation(bookingId) {
