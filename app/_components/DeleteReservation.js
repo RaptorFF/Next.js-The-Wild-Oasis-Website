@@ -7,8 +7,7 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 import SpinnerMini from "./SpinnerMini";
 
 function DeleteReservation({ bookingId }) {
-  // We use startTransition to mark the delete action as non-urgent, allowing React to keep the UI responsive while the deletion is processed.
-  // isPending can be used to show a loading state if needed, but in this case, we simply rely on the UI to remain responsive without blocking.
+  // We use useTransition Hook always when we want to perform an action directly from a button click, and no from a form submission.
   const [isPending, startTransition] = useTransition();
   function handleDelete() {
     if (confirm("Are you sure you want to delete this reservation?"))
