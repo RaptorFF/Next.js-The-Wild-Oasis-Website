@@ -41,22 +41,31 @@ export async function updateGuestProfile(formData) {
 }
 
 export async function updateReservation(formData) {
+  const bookingId = Number(formData.get("bookingId"));
   // Check if the user is authenticated before allowing them to update a reservation
   const session = await auth();
   if (!session)
     throw new Error("You must be logged in to update a reservation");
 
+  // We also want to ensure that the user can only update their own reservations, so we check if the bookingId belongs to a reservation made by the currently authenticated user before allowing the update to proceed.
+  const guestBookings = await getBookings(session.user.guestId);
+  const guestBookingIds = guestBookings.map((booking) => booking.id);
+  if (!guestBookingIds.includes(bookingId)) {
+    throw new Error("You are not allowed to update this reservation");
+  }
+
   // Add logic to update the reservation using formData
-  const numGuests = formData.get("numGuests");
-  const observations = formData.get("observations");
-  const bookingId = formData.get("bookingId");
+  const numGuests = Number(formData.get("numGuests"));
+  const observations = formData.get("observations").slice(0, 1000); // Limit observations to 1000 characters
 
   const updateData = { numGuests, observations };
 
   const { error } = await supabase
     .from("bookings")
     .update(updateData)
-    .eq("id", bookingId);
+    .eq("id", bookingId)
+    .select()
+    .single();
 
   if (error) {
     console.error(error);
@@ -64,6 +73,7 @@ export async function updateReservation(formData) {
   }
 
   // After updating the reservation, we want to revalidate the reservations page so that the updated reservation information is displayed when the user navigates back to their reservations.
+  revalidatePath(`/account/reservations/edit/${bookingId}`);
   revalidatePath("/account/reservations");
 
   redirect("/account/reservations");
