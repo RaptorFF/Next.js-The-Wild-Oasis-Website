@@ -40,6 +40,37 @@ export async function updateGuestProfile(formData) {
   revalidatePath("/account/profile");
 }
 
+export async function createReservation(reservationData, formData) {
+  // Check if the user is authenticated before allowing them to create a reservation
+  const session = await auth();
+  if (!session)
+    throw new Error("You must be logged in to create a reservation");
+
+  // Add logic to create a new reservation using formData
+
+  const bookingData = {
+    ...reservationData,
+    guestId: session.user.guestId,
+    numGuests: Number(formData.get("numGuests")),
+    observations: formData.get("observations").slice(0, 1000), // Limit observations to 1000 characters
+    extrasPrice: 0,
+    cabinPrice: reservationData.cabinPrice,
+    isPaid: false,
+    hasBreakfast: false,
+    status: "uconfirmed",
+  };
+
+  const { error } = await supabase.from("bookings").insert([bookingData]);
+
+  if (error) {
+    throw new Error("Booking could not be created");
+  }
+
+  revalidatePath(`/cabins/${reservationData.cabinId}`);
+
+  redirect("/cabins/thankyou");
+}
+
 export async function updateReservation(formData) {
   const bookingId = Number(formData.get("bookingId"));
   // Check if the user is authenticated before allowing them to update a reservation
@@ -68,7 +99,6 @@ export async function updateReservation(formData) {
     .single();
 
   if (error) {
-    console.error(error);
     throw new Error("Booking could not be updated");
   }
 
