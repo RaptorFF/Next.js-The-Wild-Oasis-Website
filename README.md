@@ -13,8 +13,8 @@
 **What I learned**
 
 - Next.js With The App Router;
-- Defining Routes, nested Routes and Pages;
-- Fethcing Data in a Page;
+- Defining Routes, Nested Routes and Pages;
+- Fetching Data in a Page;
 - Adding Interactivity between Client Components;
 - React Suspense;
 - Dynamic Route Segments;
