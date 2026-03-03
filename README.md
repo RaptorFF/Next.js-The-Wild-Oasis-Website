@@ -8,7 +8,7 @@
 
 **Links**
 
-- Project URL(vercel):
+- Project URL(vercel): https://next-js-the-wild-oasis-website.vercel.app/
 
 **What I learned**
 
