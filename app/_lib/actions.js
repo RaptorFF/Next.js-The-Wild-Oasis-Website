@@ -63,7 +63,8 @@ export async function createReservation(reservationData, formData) {
   const { error } = await supabase.from("bookings").insert([bookingData]);
 
   if (error) {
-    throw new Error("Booking could not be created");
+    console.error("Supabase booking insert error:", error);
+    throw new Error(`Booking could not be created: ${error.message || error}`);
   }
 
   revalidatePath(`/cabins/${reservationData.cabinId}`);
