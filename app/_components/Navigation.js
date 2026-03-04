@@ -5,8 +5,8 @@ export default async function Navigation() {
   // IMPORTANT: Calling auth() all the pages becoms dynamic
   const session = await auth(); // Ensure the user is authenticated before rendering the navigation
   return (
-    <nav className="z-10 text-xl">
-      <ul className="flex gap-16 items-center">
+    <nav className="z-10 text-lg sm:text-xl">
+      <ul className="flex flex-col gap-4 sm:flex-row sm:gap-16 items-start sm:items-center">
         <li>
           <Link
             href="/cabins"
@@ -27,12 +27,12 @@ export default async function Navigation() {
           {session?.user?.image ? (
             <Link
               href="/account"
-              className="hover:text-accent-400 transition-colors flex items-center gap-4"
+              className="hover:text-accent-400 transition-colors flex items-center gap-2 sm:gap-4"
             >
               <img
                 src={session.user.image}
                 alt="User Avatar"
-                className=" h-8 rounded-full"
+                className="h-8 rounded-full"
                 referrerPolicy="no-referrer"
               />
               <span>{session.user.name}</span>
